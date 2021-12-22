@@ -97,7 +97,7 @@ export default defineUserConfig<DefaultThemeOptions>({
     lastUpdated:true,
     lastUpdatedText:'最后更新时间',
     contributors:true,
-    contributorsText:'justfu'
+    contributorsText:'贡献者'
   },
   plugins:[
       [
