@@ -22,8 +22,9 @@
   * Vue2中的虚拟DOM是进行全量对比；
 
   * Vue3新增了静态标记（PatchFlag），在创建虚拟DOM的时候，根据DOM中的内容会不会发生变化，添加静态标记。在和上次虚拟节点进行对比的时候，只对比带有patch flag的节点，并且可以通过flag的信息得知当前节点要对比的具体内容。
-
+```
   ![avatar](./DOM.png)
+```
 
 * Tree-Shaking
 
