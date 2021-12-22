@@ -94,6 +94,8 @@ export default defineUserConfig<DefaultThemeOptions>({
     sidebar,
     repo:'fuzhengyi/blog',
     repoLabel:'GitHub',
+    docsBranch:"master",
+    docsDir:'src',
     editLink:true,
     editLinkText:'在GitHub上编辑此页',
     lastUpdated:true,
