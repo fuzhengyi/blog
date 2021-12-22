@@ -79,6 +79,7 @@ let sidebar = {
   }
 export default defineUserConfig<DefaultThemeOptions>({
   // 站点配置
+  base: "/blog/",
   lang: 'en-US',
   title: 'justfu',
   description: 'Just playing around',
