@@ -8,6 +8,7 @@ let navbar = [
     children: [
       {
         text: 'JavaScript',
+        link: '/javascript/sub',
         children: ['es6+', 'javascript','DOM/BOM'],
       },
       {
@@ -90,7 +91,7 @@ export default defineUserConfig<DefaultThemeOptions>({
     // 侧边栏对象
     // 不同子路径下的页面会使用不同的侧边栏
     sidebar,
-    repo:'github仓库地址',
+    repo:'fuzhengyi/blog',
     repoLabel:'GitHub',
     editLink:true,
     editLinkText:'在GitHub上编辑此页',
