@@ -9,21 +9,36 @@ let navbar = [
       {
         text: 'JavaScript',
         link: '/javascript/sub',
-        children: ['es6+', 'javascript','DOM/BOM'],
+        children: [{
+          text:'es6+',
+          link:'/javascript/es6',
+        },
+        {
+          text:'DOM',
+          link:'/javascript/DOM'
+        },
+        {
+          text:'BOM',
+          link:'/javascript/BOM'
+        }],
       },
       {
         text: 'vue',
-        children: ['vue2', 'vue3'],
+        children: [{
+          text:'vue2',
+          link:'/vue/vue2'
+        },{
+          text:'vue3',
+          link:'/vue/vue3'
+        }],
       },
-      // {
-      //   text: 'react',
-      //   children: [],
-      // },
-      // {
-      //   text: 'vue3',
-      //   link: '/javascript/vue3',
-      //   children: [],
-      // },
+      {
+        text: 'react',
+        children: [{
+          text:'react',
+          link:'/react/react'
+        }],
+      }
     ],
   },
   // 控制元素何时被激活
@@ -31,53 +46,36 @@ let navbar = [
     text: '工具',
     children: [
       {
-        text: 'webpack',
+        text: 'tool',
         link: '/',
         // 该元素将一直处于激活状态
         activeMatch: '/',
-      },
-      {
-        text: 'js正则',
-        link: '/regexp/',
-        // 该元素在当前路由路径是 /foo/ 开头时激活
-        // 支持正则表达式
-        activeMatch: '^/foo/',
-      },
+        children:[
+          {
+            text:'webpack',
+            link:'/tool/webpack'
+          },
+          {
+            text:'js正则',
+            link:'/tool/regexp'
+          }
+        ]
+      }
     ],
   },
   {
     text: 'typescript',
     children: [
       {
-        text: 'webpack',
-        link: '/',
+        text: 'typesctipt',
+        link: '/typesctipt',
         // 该元素将一直处于激活状态
         activeMatch: '/',
-      },
-      {
-        text: 'js正则',
-        link: '/regexp/',
-        // 该元素在当前路由路径是 /foo/ 开头时激活
-        // 支持正则表达式
-        activeMatch: '^/foo/',
-      },
+      }
     ],
   },
 ]
-let sidebar = {
-    '/javascript/': [
-      {
-        text: 'javascript',
-        children: ['/javascript/sub.md', '/javascript/vue3.md'],
-      },
-    ],
-    '/tool/': [
-      {
-        text: 'tool',
-        children: ['/tool/index.md'],
-      },
-    ],
-  }
+
 export default defineUserConfig<DefaultThemeOptions>({
   // 站点配置
   base: "/blog/",
@@ -92,7 +90,9 @@ export default defineUserConfig<DefaultThemeOptions>({
     navbar,
     // 侧边栏对象
     // 不同子路径下的页面会使用不同的侧边栏
-    sidebar,
+    // sidebar,
+    sidebar:'auto',
+    sidebarDepth:2,
     repo:'fuzhengyi/blog',
     repoLabel:'GitHub',
     docsBranch:"main",
