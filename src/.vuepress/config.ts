@@ -15,14 +15,15 @@ let navbar = [
         text: 'vue',
         children: ['vue2', 'vue3'],
       },
-      {
-        text: 'react',
-        children: [],
-      },
-      {
-        text: 'vue3',
-        children: [],
-      },
+      // {
+      //   text: 'react',
+      //   children: [],
+      // },
+      // {
+      //   text: 'vue3',
+      //   link: '/javascript/vue3',
+      //   children: [],
+      // },
     ],
   },
   // 控制元素何时被激活
@@ -64,16 +65,16 @@ let navbar = [
   },
 ]
 let sidebar = {
-    '/guide/': [
+    '/javascript/': [
       {
-        text: 'Guide',
-        children: ['/guide/README.md', '/guide/getting-started.md'],
+        text: 'javascript',
+        children: ['/javascript/sub.md', '/javascript/vue3.md'],
       },
     ],
-    '/reference/': [
+    '/tool/': [
       {
-        text: 'Reference',
-        children: ['/reference/cli.md', '/reference/config.md'],
+        text: 'tool',
+        children: ['/tool/index.md'],
       },
     ],
   }
