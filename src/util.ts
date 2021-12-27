@@ -71,6 +71,15 @@ const navbar = [
           }
         ],
       },
+      {
+          text:'汽车行业',
+          children:[
+              {
+                  text:'汽车标准目录',
+                  link:'/car'
+              }
+          ]
+      }
     ]
 
     export default navbar;
