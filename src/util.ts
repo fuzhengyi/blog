@@ -35,6 +35,14 @@ const navbar = [
               text:'react',
               link:'/react/react'
             }],
+          },
+          {
+            text: '混合开发',
+            link: '/hybrid',
+            children: [{
+              text:'h5、iOS、Android通信方式',
+              link:'/hybrid'
+            }],
           }
         ],
       },
@@ -55,6 +63,10 @@ const navbar = [
               {
                 text:'js正则',
                 link:'/tool/regexp'
+              },
+              {
+                text:'svn命令',
+                link:'/tool/svn'
               }
             ]
           }
