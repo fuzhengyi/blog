@@ -67,6 +67,10 @@ const navbar = [
               {
                 text:'svn命令',
                 link:'/tool/svn'
+              },
+              {
+                text:'nginx',
+                link:'/tool/nginx'
               }
             ]
           }
@@ -78,6 +82,17 @@ const navbar = [
           {
             text: 'typesctipt',
             link: '/typesctipt',
+            // 该元素将一直处于激活状态
+            activeMatch: '/',
+          }
+        ],
+      },
+      {
+        text: '计算机网络',
+        children: [
+          {
+            text: '计算机网络',
+            link: '/computerNetwork',
             // 该元素将一直处于激活状态
             activeMatch: '/',
           }
