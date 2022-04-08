@@ -63,13 +63,13 @@ cd /opt/data/packages/nginx-1.20.2
 # 10.Nginx 后面有无/的区别
 # 11.Ngixn 项目中遇到的问题
 1. 统一域名多站点nginx配置
-假设站点A地址是http://mph5.ukelink.net，是统一域名地址，站点B地址是http://invoice.ukelink.net。通过配置nginx和站点B的webpack和路由实现用站点A http://mph5.ukelink.net/invoice访问站点B。
+假设站点A地址是http://demo.justfu.net，是统一域名地址，站点B地址是http://www.justfu.net。通过配置nginx和站点B的webpack和路由实现用站点A http://demo.justfu.net/invoice访问站点B。
 ```
 首先设置站点A的nginx：
 
 location /invoice{
     rewrite ^(.*)$ $1 break;
-    proxy_pass "http://invoice.ukelink.net";
+    proxy_pass "http://www.justfu.net";
 }
 ```
 如果站点B 的nginx有转发，得把站点B的nginx转发写到站点A里。例如，站点B的nginx有一个转发到/bss的配置
@@ -81,7 +81,7 @@ location /bss{
 需要要把这个复制到站点A的nginx配置里  
 设置站点B的vue路由：  
 ![界面](./image/1.png)  
-这样，在非开发环境访问页面时，得从http://invoice.ukelink.net改成http://invoice.ukelink.net/invoice  
+这样，在非开发环境访问页面时，得从http://www.justfu.net改成http://www.justfu.net/invoice  
 tips: 关于base的说明，参考https://router.vuejs.org/zh/api/#base  
 **设置站点B的webpack**  
 如果使用vue cli3打包，在vue.config.js里添加这条publicPath配置：  
@@ -96,7 +96,7 @@ location /invoice{
     rewrite ^/invoice(.*)$ /$1 last;
 }
 ```
-完成上面操作，站点B可以通过http://invoice.ukelink.net访问， 也可以通过http://mph5.ukelink.net/invoice访问了。
+完成上面操作，站点B可以通过http://www.justfu.net访问， 也可以通过http://demo.justfu.net/invoice访问了。
 
 
 
