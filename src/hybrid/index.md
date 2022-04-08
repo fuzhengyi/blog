@@ -53,6 +53,27 @@ Vue.prototype.$bridge = Bridge
 ## h5调试
 edge://inspect/#devices
 
+## 设置webView需要的一些基本的属性
+```
+1、设置可以javascript
+      webview.getSettings().setJavaScriptEnabled(true);
+2、设置webView可以打开窗体
+      webview.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+3、设置不显示滚动条
+      webview.setVerticalScrollBarEnabled(false); （竖向）
+      webview.setHorizontalScrollBarEnabled(false); （横向）
+4、设置网页字体不跟随系统字体发生改变
+      webview.getSettings().setTextZoom(100);
+5、设置默认编码格式
+      webview.getSettings().setDefaultTextEncodingName("utf-8");
+6、设置可以调用数据库
+       webview.getSettings().setDatabaseEnabled(true);
+7、设置dom存储
+       webview.getSettings().setDomStorageEnabled(true);
+```
+## 控制字体 随系统变大而变大
+https://blog.csdn.net/u010285974/article/details/80507643
+
 
 ## 浏览器插件推荐
 **ajax interceptor**
