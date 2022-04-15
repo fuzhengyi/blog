@@ -195,3 +195,75 @@ service.interceptors.response.use(
 
 export default service;
 ```
+
+## 格式化数字后的input光标处理
+```html
+<input ref="input" type="text" v-model="inputText" />
+```
+```javascript
+import mask from 'vanilla-masker'
+export default {
+  props: {
+    value: {
+      type: String,
+      default: ''
+    },
+    mask:String //999 9999 9999
+  },
+  data() {
+    return {
+      inputText: this.value
+    }
+  },
+  watch:{
+    inputText(newVal,oldVal){
+      let selection = null;
+      try{
+        selection = this.$refs.input.selectionStart
+        let direction = newVal.length - oldVal.length
+        selection = this._getInputMaskSelection(selection, direction, this.maskValue(newVal))
+        this.lastDirection = direction
+      }catch(e){}
+      this.$emit('input',this.maskValue(newVal));
+      this.$nextTick(()=>{
+        if(this.$refs.input.selectionStart !== selection){
+          this.$refs.input.selectionStart = selection;
+          this.$refs.input.selectionEnd = selection;
+        }
+        if(this.inputText !== this.maskValue(newVal)){
+          this.inputText = this.maskValue(newVal)
+        }
+      })
+    },
+    mask(val){
+      if(val && this.inputText){
+        this.inputText = this.maskValue(this.inputText)
+      }
+    },
+    value(val){
+      this.inputText = val;
+    }
+  },
+  methods: {
+    maskValue(val){
+      var val1 = this.mask? mask.toPattern(val,this.mask) : val;
+      return val1;
+    },
+    _getInputMaskSelection (selection, direction, maskVal, loop) {
+      if (!this.mask || (loop && direction === 0)) {
+        return selection
+      }
+      if (direction === 0) {
+        direction = this.lastDirection
+      }
+      if (direction > 0) {
+        const maskChar = this.mask.substr(selection - direction, 1)
+        if (!maskChar.match(/[9SA]/)) {
+          return this._getInputMaskSelection(selection + 1, direction, maskVal, true)
+        }
+      }
+      return selection
+    }
+  }
+}
+```

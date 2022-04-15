@@ -17,6 +17,10 @@ const navbar = [
             {
               text:'BOM',
               link:'/javascript/BOM'
+            },
+            {
+              text:'js写法优化',
+              link:'/javascript/js写法优化'
             }],
           },
           {
