@@ -1,9 +1,10 @@
-# 1.Nginx 编译安装/动态添加模块
-**写在前面的话**
+
+## 1.Nginx 编译安装/动态添加模块
+### 写在前面的话
 
 此文记录我学习nginx之路，现在以nginx1.20.2为例
 
-**编译安装**
+### 编译安装
 
 我们可以前往 Nginx 的官网下载我们的源码安装包
 ```javascript
@@ -261,7 +262,7 @@ http {
 /usr/locale/nginx20/sbin/nginx -t
 /usr/locale/nginx20/sbin/nginx
 ```
-**动态添加模块**  
+### 动态添加模块 
 某些时候可能我们会发现少编译了某个模块，我们需要后续加上去，这时候就需要动态编译添加了！  
 我们这里以添加 echo 模块为例：  
 ```
@@ -329,18 +330,17 @@ cp /opt/data/packages/nginx/nginx-1.16.0/objs/nginx /usr/locale/nginx20/sbin/
 # 查看
 /usr/locale/nginx20/sbin/nginx -V
 ```
-# 2.Nginx 基本配置和日志处理
+## 2.Nginx 基本配置和日志处理
 
-# 3.Nginx location/root/alias
-# 4.Nginx rewrite/if/return/set和变量
-# 5.Nginx TCP/正向/反向代理/负载均衡
-# 6.Nginx 文件下载/用户认证
-# 7.Nginx 状态统计/状态码统计
-# 8.Nginx 安全优化/信息隐藏/请求限制/白名单
-# 9.Nginx 静态压缩/日志切割/防盗链/恶意解析/跨域
-# 10.Nginx 后面有无/的区别
-# 11.Ngixn 项目中遇到的问题
-
+## 3.Nginx location/root/alias
+## 4.Nginx rewrite/if/return/set和变量
+## 5.Nginx TCP/正向/反向代理/负载均衡
+## 6.Nginx 文件下载/用户认证
+## 7.Nginx 状态统计/状态码统计
+## 8.Nginx 安全优化/信息隐藏/请求限制/白名单
+## 9.Nginx 静态压缩/日志切割/防盗链/恶意解析/跨域
+## 10.Nginx 后面有无/的区别
+## Ngixn 项目中遇到的问题（实战篇）
 1. 前端nginx注意事项  
   * 升级前，如果Nginx有变动，先升级Nginx配置
   * 如果后台服务是多节点则使用负载均衡
@@ -354,7 +354,7 @@ set $proxyUrl "https://elb.com";
 proxy_pass $proxyUrl;
 ```
 
-2. 统一域名多站点nginx配置
+## 统一域名多站点nginx配置
 假设站点A地址是http://demo.justfu.net，是统一域名地址，站点B地址是http://www.justfu.net。通过配置nginx和站点B的webpack和路由实现用站点A http://demo.justfu.net/invoice访问站点B。
 ```
 首先设置站点A的nginx：
@@ -372,7 +372,7 @@ location /bss{
 ```
 需要要把这个复制到站点A的nginx配置里  
 设置站点B的vue路由：  
-![界面](./image/1.png)  
+![rr](./image/1.png)
 这样，在非开发环境访问页面时，得从http://www.justfu.net改成http://www.justfu.net/invoice  
 tips: 关于base的说明，参考https://router.vuejs.org/zh/api/#base  
 **设置站点B的webpack**  

@@ -267,3 +267,42 @@ export default {
   }
 }
 ```
+
+## 洋葱模型
+```javascript
+let middleware = []
+middleware.push((next) => {
+  console.log(1)
+  next()
+  console.log(1.1)
+})
+middleware.push((next) => {
+  console.log(2)
+  next()
+  console.log(2.2)
+})
+middleware.push((next) => {
+  console.log(3)
+  next()
+  console.log(3.3)
+})
+
+// let next = () => {}
+
+function compose(middleware) {
+  return function () {
+    let args = arguments
+    dispatch(0)
+    function dispatch(i) {
+      const fn = middleware[i]
+      if (!fn) return null
+      fn(function next() {
+        dispatch(i + 1)
+      }, ...args)
+    }
+  }
+}
+
+let fn = compose(middleware)
+fn()
+```

@@ -19,8 +19,16 @@ const navbar = [
               link:'/javascript/BOM'
             },
             {
+              text:'ECMAScript',
+              link:'/javascript/ECMAScript'
+            },
+            {
               text:'js写法优化',
               link:'/javascript/js写法优化'
+            },
+            {
+              text:'js监控',
+              link:'/javascript/js监控'
             }],
           },
           {
