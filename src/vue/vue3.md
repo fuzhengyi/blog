@@ -181,7 +181,7 @@ createApp(App).use(router).use(vant).mount('#app')
 
     * 概念：一个组件选项，在组件被创建之前，props 被解析之后执行。它是组合式 API 的入口。
 
-    * 组件中所用到的：数据、方法等等，均要配置在setup中。
+    * 组件中所用到的数据、方法等等，均要配置在setup中。
 
     * setup接受两个参数props和context
 

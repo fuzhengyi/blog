@@ -8,7 +8,7 @@
 
 我们可以前往 Nginx 的官网下载我们的源码安装包
 ```javascript
-//下载地址：http://nginx.org/en/download.html
+//:下载地址：http//nginx.org/en/download.html
 ```
 对于生产应用，稳定放在第一位，所以我们选择下载 Stable 版本。
 
@@ -353,6 +353,26 @@ resolver 8.8.8.8 114.114.114.114 valid=300 ipv6=off;
 set $proxyUrl "https://elb.com";
 proxy_pass $proxyUrl;
 ```
+
+2. 强缓存与协商缓存的区别  
+    强缓存：浏览器不与服务端协商直接取浏览器缓存  
+    协商缓存：浏览器会先向服务器确认资源的有效性后才决定是从缓存中取资源还是从新获取资源
+
+    后端通过Etag和Last-Modified两项响应头判断资源是否更新
+
+    前端请求相同资源的时候会在请求头中带上If-Modified-Since和If-None-Match和服务端生成的Etag和Last-Modified作比较，如果没有更新会返回空响应状态码304
+
+```shell
+location /picture/ { 
+    add_header Cache-Control no-cache;#nginx配置协商缓存
+    alias D:/fuzhengyi/tcp_test/picture/; 
+}   
+
+
+```
+3. no-cache与no-store的区别  
+　no-cache表示不缓存过期资源，缓存会向服务器进行有效处理确认之后处理资源  
+  no-store才是真正的不进行缓存。
 
 ## 统一域名多站点nginx配置
 假设站点A地址是http://demo.justfu.net，是统一域名地址，站点B地址是http://www.justfu.net。通过配置nginx和站点B的webpack和路由实现用站点A http://demo.justfu.net/invoice访问站点B。
