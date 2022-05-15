@@ -1,3 +1,5 @@
+# git使用
+```
 git clone 
 
 git add . // add/rm
@@ -48,7 +50,7 @@ git push origin <tagName> // 推送到远程仓库
 git cherry-pick 提交id // 将制定提交复制到当前分支
 
 .gitignore文件
-
+```
 # 日常工作流
 1. 在master分支开发
 ```
