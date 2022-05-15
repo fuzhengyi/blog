@@ -8,7 +8,7 @@
 **组建name的作用**  
     * 指定name选项的另外一个好处是便于调试
     * 有名字的组件有更友好的警告信息
-    * 另外当在有vue-devtools,未命名组件将显示<AnonymousComponent>,这种很没有语义, 通过提供name 选项,可以获得更有语义信息的组件树
+    * 另外当在有vue-devtools,未命名组件将显示AnonymousComponent,这种很没有语义, 通过提供name 选项,可以获得更有语义信息的组件树
 
 **路由name的作用**  
     * vue路由的name的作用(他就是给你当前的路由取了一个名字):
