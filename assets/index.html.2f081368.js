@@ -1,0 +1,1 @@
+const t={key:"v-cc133616",path:"/computerNetwork/",title:"http/https",lang:"en-US",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:165001835e4,contributors:[{name:"fuzhengyi",email:"421815090@qq.com",commits:3}]},filePathRelative:"computerNetwork/index.md"};export{t as data};

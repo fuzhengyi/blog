@@ -1,0 +1,1 @@
+import{o as e,c as r}from"./app.d45e3be2.js";import{_ as c}from"./plugin-vue_export-helper.21dcd24c.js";const o={};function n(t,p){return e(),r("p",null,"cat /proc/version \u67E5\u770Blinux\u7248\u672C")}var s=c(o,[["render",n]]);export{s as default};

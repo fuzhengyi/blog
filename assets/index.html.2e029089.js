@@ -1,0 +1,1 @@
+const t={key:"v-6dc2dab3",path:"/typesctipt/",title:"ts",lang:"en-US",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1640353727e3,contributors:[{name:"fuzhengyi",email:"421815090@qq.com",commits:1}]},filePathRelative:"typesctipt/index.md"};export{t as data};
