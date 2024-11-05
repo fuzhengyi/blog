@@ -81,3 +81,10 @@ git commit -m "22"
 git pull // 可能冲突
 git push // 报错 git pull
 ```
+
+
+GitHub ssh-key配置
+生成ssh-key
+ssh-keygen -t rsa -C "邮箱"
+检测是否成功
+ssh -T git@github.com
