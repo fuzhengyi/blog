@@ -1,0 +1,1 @@
+const e={key:"v-44bc3be2",path:"/javascript/designMode.html",title:"",lang:"en-US",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:165001835e4,contributors:[{name:"fuzhengyi",email:"421815090@qq.com",commits:1}]},filePathRelative:"javascript/designMode.md"};export{e as data};
