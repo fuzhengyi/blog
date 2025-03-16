@@ -25,7 +25,7 @@ jobs:
 
       # 缓存 node_modules
       - name: Cache dependencies
-        uses: ctions/cache@v3
+        uses: actions/cache@v3
         id: yarn-cache
         with:
           path: |
