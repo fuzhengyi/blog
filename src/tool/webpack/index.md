@@ -116,3 +116,8 @@
 
 
 ## 几万条数据的一个dom渲染问题
+
+
+## 架构思想之前端工程化设计
+ https://u19tul1sz9g.feishu.cn/drive/folder/GmhvfDBuSlSvCPdPHbUcllU0nzb
+ https://u19tul1sz9g.feishu.cn/docx/K2WkdKyL3oXY0ix2Qzrci76ingb?from=from_copylink

@@ -40,15 +40,85 @@
 
 
 ## 闭包的应用
-
 函数作为参数被传递
-
 函数作为返回值被返回
+应用实例：
+1. 数据封装和私有变量，
+2. 回调函数和事件处理程序
+3. 记忆化（Memoization）记忆化是一种优化技术，用于缓存函数的结果，以避免重复计算
+4. 模块模式 模块模式利用闭包来创建私有变量和方法，从而实现模块化编程。
+5. 高阶函数 高阶函数接受函数作为参数或返回函数，闭包在这种情况下非常有用。
+6. 维护状态 闭包可以用于维护和更新状态，特别是在没有类的情况下。
+7. 实现迭代器 闭包可以用来实现自定义的迭代器。
+```js
+// 数据封装和私有变量
+function createPerson(name) {
+    let age = 25; // 私有变量
 
-应用实例：比如缓存工具，隐藏数据，只提供api
+    return {
+        getName: function() {
+            return name;
+        },
+        getAge: function() {
+            return age;
+        },
+        setAge: function(newAge) {
+            if (newAge > 0) {
+                age = newAge;
+            }
+        }
+    };
+}
+
+const person = createPerson("Alice");
+
+console.log(person.getName()); // 输出: Alice
+console.log(person.getAge());  // 输出: 25
+person.setAge(30);
+console.log(person.getAge());  // 输出: 30
+console.log(person.age);       // 输出: undefined （无法直接访问私有变量）
+
+// 回调函数和事件处理程序
+function setupButton(buttonId, message) {
+    const button = document.getElementById(buttonId);
+
+    button.addEventListener('click', function() {
+        console.log(message);
+    });
+}
+
+setupButton('myButton', 'Button clicked!');
+
+// HTML:
+// <button id="myButton">Click Me</button>
+
+// 记忆化（Memoization）
+function memoize(fn) {
+    const cache = {};
+
+    return function(...args) {
+        const key = JSON.stringify(args);
+
+        if (cache[key]) {
+            return cache[key];
+        }
+
+        const result = fn.apply(this, args);
+        cache[key] = result;
+        return result;
+    };
+}
+
+const fibonacci = memoize(function(n) {
+    if (n <= 1) return n;
+    return fibonacci(n - 1) + fibonacci(n - 2);
+});
+
+console.log(fibonacci(10)); // 输出: 55
+console.log(fibonacci(10)); // 输出: 55 （从缓存中获取）
+```
 
 ## new实现
-
 1. 首先创一个新的空对象
 2. 根据原型链，设置空对象的__proto__为构造函数的prototype
 3. 构造函数的this指向这个对象，执行构造函数的代码

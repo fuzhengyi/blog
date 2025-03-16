@@ -23,6 +23,18 @@ const navbar = [
               link:'/javascript/ECMAScript'
             },
             {
+              text:'项目管理',
+              link:'/javascript/项目管理'
+            },
+            {
+              text:'面试总结',
+              link:'/javascript/面试总结'
+            },
+            {
+              text:'面试题',
+              link:'/javascript/面试题'
+            },
+            {
               text:'js写法优化',
               link:'/javascript/js写法优化'
             },

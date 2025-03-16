@@ -573,11 +573,190 @@ setup() {
     </suspense>
   </template>
 
-  <script>
+<script>
   export default {
     components: {
       TodoList: defineAsyncComponent(() => import('./TodoList.vue'))
     }
   }
+</script>
+```
+### 路由守卫
+Vue 路由守卫提供了多种方式来控制导航过程中的行为，包括全局前置守卫、全局解析守卫、全局后置钩子、路由独享守卫和组件内守卫。通过合理使用这些守卫，可以实现权限控制、数据加载、日志记录等功能，提升应用的安全性和用户体验。
+1. 全局前置守卫 (beforeEach) 全局前置守卫会在每次导航触发前调用，可以用来进行权限验证、加载数据等操作。
+示例：权限控制
+假设我们有一个简单的应用，其中 /dashboard 是一个受保护的页面，只有登录用户才能访问。我们可以使用 beforeEach 守卫来检查用户的认证状态。
+```js
+import { createRouter, createWebHistory } from 'vue-router';
+import Home from './views/Home.vue';
+import Login from './views/Login.vue';
+import Dashboard from './views/Dashboard.vue';
+
+const router = createRouter({
+    history: createWebHistory(),
+    routes: [
+        { path: '/', component: Home },
+        { path: '/login', component: Login },
+        { path: '/dashboard', component: Dashboard }
+    ]
+});
+
+router.beforeEach((to, from, next) => {
+    const isAuthenticated = localStorage.getItem('token'); // 检查用户是否已登录
+
+    if (to.matched.some(record => record.meta.requiresAuth) && !isAuthenticated) {
+        next('/login'); // 如果未登录且尝试访问受保护的页面，则重定向到登录页
+    } else {
+        next(); // 继续导航
+    }
+});
+
+export default router;
+```
+2. 全局解析守卫 (beforeResolve) 全局解析守卫在导航被确认之前，同时在所有组件内守卫和异步路由组件被解析之后调用。
+示例：加载数据
+假设我们在导航到某个页面之前需要加载一些数据，可以使用 beforeResolve 守卫来处理。
+```js
+import { createRouter, createWebHistory } from 'vue-router';
+import Home from './views/Home.vue';
+import Profile from './views/Profile.vue';
+
+const router = createRouter({
+    history: createWebHistory(),
+    routes: [
+        { path: '/', component: Home },
+        { path: '/profile', component: Profile }
+    ]
+});
+
+router.beforeResolve(async (to, from, next) => {
+    try {
+        // 模拟异步数据加载
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        console.log("Data loaded successfully");
+        next();
+    } catch (error) {
+        console.error("Failed to load data", error);
+        next(false); // 阻止导航
+    }
+});
+
+export default router;
+```
+3. 全局后置钩子 (afterEach) 全局后置钩子在导航完成后调用，不改变导航本身的状态。
+示例：记录日志
+假设我们需要在每次导航完成后记录日志，可以使用 afterEach 钩子。
+```js
+import { createRouter, createWebHistory } from 'vue-router';
+import Home from './views/Home.vue';
+import About from './views/About.vue';
+
+const router = createRouter({
+    history: createWebHistory(),
+    routes: [
+        { path: '/', component: Home },
+        { path: '/about', component: About }
+    ]
+});
+
+router.afterEach((to, from) => {
+    console.log(`Navigated from ${from.path} to ${to.path}`);
+    // 可以在这里记录日志、发送分析数据等
+});
+
+export default router;
+```
+4. 路由独享守卫 (beforeEnter) 路由独享守卫仅在进入特定路由时调用，适用于特定路由的权限控制。
+示例：权限控制
+假设我们希望在进入 /settings 页面时进行额外的权限检查。
+```js
+import { createRouter, createWebHistory } from 'vue-router';
+import Home from './views/Home.vue';
+import Settings from './views/Settings.vue';
+
+const router = createRouter({
+    history: createWebHistory(),
+    routes: [
+        { path: '/', component: Home },
+        {
+            path: '/settings',
+            component: Settings,
+            beforeEnter: (to, from, next) => {
+                const isAdmin = localStorage.getItem('isAdmin');
+                if (!isAdmin) {
+                    next('/');
+                } else {
+                    next();
+                }
+            }
+        }
+    ]
+});
+
+export default router;
+```
+5. 组件内守卫 组件内守卫允许你在组件内部定义导航守卫，适用于特定组件的逻辑。
+示例：组件内守卫
+假设我们在进入 UserProfile 组件时需要加载用户数据。
+  - beforeRouteEnter 守卫在进入组件对应的路由前调用，并在回调中设置组件数据。
+  - beforeRouteUpdate 守卫在当前路由改变但组件被复用时调用，重新加载用户数据。
+  - beforeRouteLeave 守卫在离开组件对应的路由时调用，可以执行清理操作。
+```js
+<template>
+  <div>
+    <h1>User Profile</h1>
+    <p v-if="user">{{ user.name }}</p>
+    <p v-else>Loading...</p>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'UserProfile',
+  data() {
+    return {
+      user: null
+    };
+  },
+  async beforeRouteEnter(to, from, next) {
+    // 在渲染该组件的对应路由被 confirm 前调用
+    // 不能获取组件实例 `this`
+    // 因为当守卫执行前，组件实例还没被创建
+    try {
+      const response = await fetch(`/api/user/${to.params.id}`);
+      const userData = await response.json();
+      next(vm => {
+        vm.user = userData; // 通过 `vm` 访问组件实例
+      });
+    } catch (error) {
+      console.error("Failed to load user data", error);
+      next(false); // 阻止导航
+    }
+  },
+  beforeRouteUpdate(to, from, next) {
+    // 在当前路由改变，但是该组件被复用时调用
+    // 举例来说，对于一个带有动态参数的路径 /foo/:id，在 /foo/1 和 /foo/2 之间跳转的时候，
+    // 由于会渲染同样的 Foo 组件，因此组件实例会被复用。而这个钩子就会在这个情况下被调用。
+    // 可以访问组件实例 `this`
+    this.fetchUserData(to.params.id);
+    next();
+  },
+  beforeRouteLeave(to, from, next) {
+    // 导航离开该组件的对应路由时调用
+    // 可以访问组件实例 `this`
+    console.log("Leaving UserProfile");
+    next();
+  },
+  methods: {
+    async fetchUserData(userId) {
+      try {
+        const response = await fetch(`/api/user/${userId}`);
+        this.user = await response.json();
+      } catch (error) {
+        console.error("Failed to load user data", error);
+      }
+    }
+  }
+};
 </script>
 ```
