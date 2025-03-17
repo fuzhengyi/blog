@@ -81,6 +81,10 @@ const navbar = [
             activeMatch: '/',
             children:[
               {
+                text:'vite',
+                link:'/tool/vite'
+              },
+              {
                 text:'webpack',
                 link:'/tool/webpack'
               },
@@ -89,8 +93,12 @@ const navbar = [
                 link:'/tool/regexp'
               },
               {
-                text:'svn命令',
+                text:'svn',
                 link:'/tool/svn'
+              },
+              {
+                text:'git',
+                link:'/tool/git'
               },
               {
                 text:'nginx',
