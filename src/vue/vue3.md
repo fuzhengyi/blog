@@ -48,9 +48,6 @@
 1. 新的内置组件
   * Fragment 支持多个根节点，Vue2 中，编写每个组件都需要一个父级标签进行包裹，而Vue3 不需要，内部会默认添加 Fragments；
   * Teleport Teleport是vue3推出的新功能，也就是传送的意思，可以更改dom渲染的位置。
-  ```html
-    <teleport to="#footer">
-  ```
   * Suspense 可以在组件渲染之前的等待时间显示指定内容，比如loading；
 2. 新增指令
     * v-memo 新增指令可以缓存 html 模板，比如 v-for 列表不会变化的就缓存，简单说就是用内存换时间
