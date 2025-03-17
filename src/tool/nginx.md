@@ -414,4 +414,75 @@ location /invoice{
 
 
 https://www.cnblogs.com/Dy1an/category/1491372.html
-                                                                                                                                                                                         
+
+### nginx实现前端灰度发布
+在前端开发中，灰度发布是一种重要的策略，它允许我们在不影响所有用户的情况下，逐步推出新功能或更新。通过灰度发布，我们可以测试新版本的稳定性和性能，同时收集用户反馈
+1. 基于权重的流量分配
+基于权重的灰度发布是最常见的一种方式。通过调整不同版本服务的权重，控制流量的分配比例。例如，假设我们的线上商城有两个版本的支付系统，一个是老版本（V1），另一个是新版本（V2）。我们希望新版本在初期只接收 20% 的请求流量，剩余的 80% 请求继续由老版本处理。Nginx 的配置可以如下：
+```bash
+upstream payment_system {
+    server v1.payment.example.com weight=80;
+    server v2.payment.example.com weight=20;
+}
+```
+在这个配置中，80%的流量会被引导到老版本的支付系统（V1），20%的流量会被引导到新版本的支付系统（V2）。随着新版本逐渐稳定，我们可以逐步增加新版本的权重，最终将所有流量切换到新版本。
+2. 基于 Cookie 的分流
+有时，我们希望根据用户的身份来决定他们是否接入新版本。这时，可以通过浏览器的 Cookie 来实现基于用户的灰度发布。例如，我们在应用中设置了一个名为 is_gray 的 Cookie，标记用户是否参与新版本的灰度测试。
+```bash
+server {
+    listen 80;
+    server_name example.com;
+    location / {
+        if ($http_cookie ~* "is_gray=1") {
+            proxy_pass http://v2.backend.example.com;
+        }
+        proxy_pass http://v1.backend.example.com;
+    }
+}
+```
+在上面的配置中，如果用户的 Cookie 中有 is_gray=1 的标记，Nginx 会将该用户的请求路由到新版本的服务（V2）；否则，用户的请求会继续访问旧版本的服务（V1）。这种方式适合用于定向测试和用户分组。
+3. 基于请求头的分流
+我们还可以根据请求头来实现灰度发布。例如，根据请求中的用户 ID 判断是否将请求路由到灰度环境。这可以通过 Nginx 的 Lua 模块和 Redis 来实现。
+```bash
+server {
+    listen 80;
+    server_name example.com;
+    location / {
+        access_by_lua_block {
+            local redis = require "resty.redis"
+            local red = redis:new()
+            local ok, err = red:connect("redis_host", redis_port)
+            if not ok then
+                ngx.log(ngx.ERR, "failed to connect to Redis: ", err)
+                ngx.exit(500)
+            end
+            local user_id = ngx.req.get_headers()["X-User-ID"]
+            local is_gray = red:get("gray:" .. user_id)
+            if is_gray == "1" then
+                ngx.var.upstream = "gray_backend"
+            end
+        }
+        proxy_pass http://backend;
+    }
+}
+```
+在上面的示例中，我们连接到 Redis，并根据请求中的用户 ID 判断是否将请求路由到灰度环境。ngx.var.upstream 变量用于动态设置上游地址，从而实现灰度环境的路由。
+4. 基于请求参数的分流
+我们还可以根据请求参数来实现灰度发布。例如，根据请求中的某个参数值决定路由到哪个版本。
+```bash
+server {
+    listen 80;
+    server_name example.com;
+    location / {
+        set $group "default";
+        if ($query_string ~* "thirdPolicystatus=1") {
+            set $group new_version;
+        }
+        if ($query_string ~* "thirdPolicystatus=2") {
+            set $group old_version;
+        }
+        proxy_pass http://$group;
+    }
+}
+```
+在上面的配置中，我们根据请求参数 thirdPolicystatus 的值来决定路由到哪个版本。如果参数值为 1，则路由到新版本；如果参数值为 2，则路由到旧版本。总结
