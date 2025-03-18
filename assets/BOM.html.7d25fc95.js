@@ -1,0 +1,1 @@
+const t={key:"v-29b36602",path:"/javascript/BOM.html",title:"BOM \u6D4F\u89C8\u5668\u5BF9\u8C61\u6A21\u578B",lang:"en-US",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1650243644e3,contributors:[{name:"fuzhengyi",email:"421815090@qq.com",commits:1},{name:"lianfeiru",email:"1393245231@qq.com",commits:1}]},filePathRelative:"javascript/BOM.md"};export{t as data};
