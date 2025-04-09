@@ -1,0 +1,1 @@
+import{o as e,c as r,a as t,d as o}from"./app.bc17808d.js";import{_ as a}from"./plugin-vue_export-helper.21dcd24c.js";const c={},s={id:"regexp",tabindex:"-1"},d=t("a",{class:"header-anchor",href:"#regexp","aria-hidden":"true"},"#",-1),_=o(" regexp"),n=[d,_];function i(p,h){return e(),r("h1",s,n)}var l=a(c,[["render",i]]);export{l as default};

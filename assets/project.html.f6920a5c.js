@@ -1,0 +1,1 @@
+const t={key:"v-33ff5a9e",path:"/tool/project.html",title:"",lang:"en-US",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:174409188e4,contributors:[{name:"DESKTOP-630O49F\\Administrator",email:"421815090@qq.com",commits:4},{name:"DESKTOP-630O49F\\Administrator",email:"421815090@",commits:1}]},filePathRelative:"tool/project.md"};export{t as data};
