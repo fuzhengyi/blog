@@ -452,3 +452,4 @@ Promise --> MutationObserver --> setImmediate --> setTimeout
 
 4. setTimeout (宏任务)：
 如果前面所有的都不支持，那你的浏览器一定支持 setTimeout！！！终极方案：setTimeout(flushCallbacks, 0)
+dfd
