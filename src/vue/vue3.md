@@ -379,3 +379,76 @@ export default {
 ```
 
 ## vue2和vue3区别
+## nextTick原理
+在调用this.$nextTick(cb)之前：
+  1. 存在一个callbacks数组，用于存放所有的cb回调函数。
+  2. 存在一个flushCallbacks函数，用于执行callbacks数组中的所有回调函数。
+  3. 存在一个timerFunc函数，用于将flushCallbacks函数添加到任务队列中。
+
+当调用this.nextTick(cb)时：
+  1. nextTick会将cb回调函数添加到callbacks数组中。
+  2. 判断在当前事件循环中是否是第一次调用nextTick：
+    - 如果是第一次调用，将执行timerFunc函数，添加flushCallbacks到任务队列。
+    - 如果不是第一次调用，直接下一步
+  3. 如果没有传递cb回调函数，则返回一个Promise实例
+```js
+// 存储所有的cb回调函数
+const callbacks = [];
+/*类似于节流的标记位，标记是否处于节流状态。防止重复推送任务*/
+let pending = false;
+
+/*遍历执行数组 callbacks 中的所有存储的cb回调函数*/
+function flushCallbacks() {
+  // 重置标记，允许下一个 nextTick 调用
+  pending = false;
+  /*执行所有cb回调函数*/
+  for (let i = 0; i < callbacks.length; i++) {
+    callbacks[i]();
+  }
+  // 清空回调数组，为下一次调用做准备
+  callbacks.length = 0;
+}
+
+function nextTick(cb) {
+  // 将回调函数cb添加到 callbacks 数组中
+  callbacks.push(() => {
+    cb();
+  });
+  
+  // 第一次使用 nextTick 时，pending 为 false，下面的代码才会执行
+  if (!pending) {
+    // 改变标记位的值，如果有flushCallbacks被推送到任务队列中去则不需要重复推送
+    pending = true;
+    // 使用 Promise 机制，将 flushCallbacks 推送到任务队列
+    Promise.resolve().then(flushCallbacks);
+  }
+}
+```
+```js
+let message = '初始消息';
+  
+nextTick(() => {
+  message = '更新后的消息';
+  console.log('回调：', message); // 输出2: 更新后的消息
+});
+
+console.log('测试开始：', message); // 输出1: 初始消息
+```
+为了防止浏览器不支持 Promise，Vue 选择了多种 API 来实现兼容 nextTick：
+Promise --> MutationObserver --> setImmediate --> setTimeout
+
+1. Promise (微任务)：
+  如果当前环境支持 Promise，Vue 会使用 Promise.resolve().then(flushCallbacks)
+
+
+2. MutationObserver (微任务)：
+如果不支持 Promise，支持 MutationObserver。Vue 会创建一个 MutationObserver 实例，通过监听文本节点的变化来触发执行回调函数。
+
+
+3. setImmediate (宏任务)：
+如果前两者都不支持，支持 setImmediate。则：setImmediate(flushCallbacks)
+注意：setImmediate 在绝大多数浏览器中不被支持，但在 Node.js 中是可用的。
+
+
+4. setTimeout (宏任务)：
+如果前面所有的都不支持，那你的浏览器一定支持 setTimeout！！！终极方案：setTimeout(flushCallbacks, 0)
